@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <title>Погода</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>Погода здесь</h1>
+      <button type="submit">Обновить геолокацию</button>
+    </header>
+    <main>
+      <div class="current-city-card">
+        <div class="current-city-info">
+          <h3>Saint-Petersburg</h3>
+          <div class="current-city-weather">
+            <img src="images/Sun.png" width="20%">
+            <p>8&degC</p>
+          </div>
+        </div>
+        <ul class="weather-values">
+          <li>Ветер Moderate breeeze, 6.0 m/s, North-northwest</li>
+          <li>Облачность Broken clouds</li>
+          <li>Давление 1013 hpa</li>
+          <li>Влажность 52%</li>
+          <li>Координаты [59.88, 30.42]</li>
+        </ul>
+      </div>
+      <div class="favorites-header">
+        <p>Избранное</p>
+        <textarea></textarea>
+        <button type="button">+</button>
+      </div>
+      <div class="city-cards-container">
+        <div class="city-card">
+          <div class="city-card-header">
+            <h2>Moscow</h2>
+            <p>5&degC</p>
+            <img src="images/Sun.png" width="20%">
+            <button type="button"><img src="images/cross.png"></button>
+          </div>
+          <ul class="weather-values">
+            <li>Ветер Moderate breeeze, 6.0 m/s, North-northwest</li>
+            <li>Облачность Broken clouds</li>
+            <li>Давление 1013 hpa</li>
+            <li>Влажность 52%</li>
+            <li>Координаты [59.88, 30.42]</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

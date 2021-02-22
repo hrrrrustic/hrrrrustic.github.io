@@ -1,0 +1,45 @@
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.current-city-card {
+    display: flex;
+    flex-direction: row;
+}
+
+.current-city-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.current-city-weather {
+    display: flex;
+    flex-direction: row;
+}
+
+.favorites-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.weather-values {
+    list-style-type: none;
+}
+
+.weather-values > li {
+    background-color: rgb(167, 175, 176);
+    margin: 10px;
+}
+
+.city-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-card-header {
+    display: flex;
+    flex-direction: row;
+}
