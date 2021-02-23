@@ -1,45 +1,158 @@
 header {
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+}
+
+body {
+    margin: 35px 35px 35px 35px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 250%;
+}
+
+h2 {
+    font-size: 180%;
 }
 
 .current-city-card {
+    margin-top: 25px;
     display: flex;
     flex-direction: row;
+    align-self: flex-start;
 }
 
 .current-city-info {
     display: flex;
     flex-direction: column;
+    font-size: x-large;
 }
 
 .current-city-weather {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.current-city-weather > p {
+    font-size: 500%;
 }
 
 .favorites-header {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
 }
 
 .weather-values {
-    list-style-type: none;
+    max-width: 650px;
 }
 
 .weather-values > li {
     background-color: rgb(167, 175, 176);
-    margin: 10px;
+    margin-top: 10px;
+    color: rgb(238, 246, 249);
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: large;
+    font-weight: bold;
+    min-width: 500px;
+}
+
+.city-cards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .city-card {
     display: flex;
     flex-direction: column;
+    max-width: 700px;
+    margin: 50px 0px 0px 0px;
 }
 
 .city-card-header {
     display: flex;
     flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+textarea {
+    resize: none;
+    background-color: rgb(241, 241, 241);
+    max-height: 20px;
+    min-width: 300px;
+    border: none;
+    border-radius: 1px;
+    padding: 8px;
+}
+
+.tempareture-font-color {
+    color: rgb(125, 125, 125);
+    font-size: xx-large;
+}
+
+.city-font-color {
+    color: rgb(111, 129, 131);
+}
+
+.remove-button {
+    border: none;
+    outline: none;
+    background: none;
+    background-color:rgb(112, 130, 138);
+    border-radius: 50%;
+    font-size: x-large;
+    max-width: 60px;
+    max-height: 60px;
+    min-width: 40px;
+    min-height: 40px;
+    color: white;
+}
+
+.add-button {
+    border: none;
+    background-color:rgb(112, 130, 138);
+    border-radius: 50%;
+    font-size: x-large;
+    max-height: 60px;
+    max-width: 60px;
+    min-width: 40px;
+    min-height: 40px;
+    margin-left: 20px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.geo-button {
+    background-color: rgb(201, 210, 215);
+    min-width: 250px;
+    min-height: 50px;
+    border-radius: 8px;
+    font-size: medium;
+    border: none;
+}
+
+.new-city-add-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

@@ -1,54 +1,104 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <title>Погода</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <header>
-      <h1>Погода здесь</h1>
-      <button type="submit">Обновить геолокацию</button>
-    </header>
-    <main>
-      <div class="current-city-card">
-        <div class="current-city-info">
-          <h3>Saint-Petersburg</h3>
-          <div class="current-city-weather">
-            <img src="images/Sun.png" width="20%">
-            <p>8&degC</p>
-          </div>
+
+<head>
+  <title>Погода</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="reset.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Погода здесь</h1>
+    <button type="submit" class="geo-button">Обновить геолокацию</button>
+  </header>
+  <main>
+    <div class="current-city-card">
+      <div class="current-city-info">
+        <h2 class="city-font-color">Saint-Petersburg</h2>
+        <div class="current-city-weather">
+          <img src="images/Sun.png" style="max-height: 200px; max-width: 200px;">
+          <p class="tempareture-font-color">8&degC</p>
+        </div>
+      </div>
+      <ul class="weather-values">
+        <li><span>Ветер</span><span>Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+        <li><span>Облачность</span><span>Broken clouds</span></li>
+        <li><span>Давление</span><span> 1013 hpa</span></li>
+        <li><span>Влажность</span><span>52%</span></li>
+        <li><span>Координаты</span><span>[59.88, 30.42]</span></li>
+      </ul>
+    </div>
+    <div class="favorites-header">
+      <h2>Избранное</h2>
+      <div class="new-city-add-area">
+        <textarea placeholder="Добавить новый город"></textarea>
+        <button type="button" class="add-button">+</button>
+      </div>
+    </div>
+    <div class="city-cards-container">
+      <div class="city-card">
+        <div class="city-card-header">
+          <h3 class="city-font-color">Moscow</h3>
+          <p class="tempareture-font-color">5&degC</p>
+          <img src="images/Sun.png" style="max-height: 60px; max-width: 60px; height: auto; width: auto;">
+          <button type="button" class="remove-button">x</button>
         </div>
         <ul class="weather-values">
-          <li>Ветер Moderate breeeze, 6.0 m/s, North-northwest</li>
-          <li>Облачность Broken clouds</li>
-          <li>Давление 1013 hpa</li>
-          <li>Влажность 52%</li>
-          <li>Координаты [59.88, 30.42]</li>
+          <li><span>Ветер</span><span>Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span>Облачность</span><span>Broken clouds</span></li>
+          <li><span>Давление</span><span> 1013 hpa</span></li>
+          <li><span>Влажность</span><span>52%</span></li>
+          <li><span>Координаты</span><span>[59.88, 30.42]</span></li>
         </ul>
       </div>
-      <div class="favorites-header">
-        <p>Избранное</p>
-        <textarea></textarea>
-        <button type="button">+</button>
-      </div>
-      <div class="city-cards-container">
-        <div class="city-card">
-          <div class="city-card-header">
-            <h2>Moscow</h2>
-            <p>5&degC</p>
-            <img src="images/Sun.png" width="20%">
-            <button type="button"><img src="images/cross.png"></button>
-          </div>
-          <ul class="weather-values">
-            <li>Ветер Moderate breeeze, 6.0 m/s, North-northwest</li>
-            <li>Облачность Broken clouds</li>
-            <li>Давление 1013 hpa</li>
-            <li>Влажность 52%</li>
-            <li>Координаты [59.88, 30.42]</li>
-          </ul>
+      <div class="city-card">
+        <div class="city-card-header">
+          <h3 class="city-font-color">Helsinki</h3>
+          <p class="tempareture-font-color">3&degC</p>
+          <img src="images/Sun.png" style="max-height: 60px; max-width: 60px; height: auto; width: auto;">
+          <button type="button" class="remove-button">x</button>
         </div>
+        <ul class="weather-values">
+          <li><span>Ветер</span><span>Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span>Облачность</span><span>Broken clouds</span></li>
+          <li><span>Давление</span><span> 1013 hpa</span></li>
+          <li><span>Влажность</span><span>52%</span></li>
+          <li><span>Координаты</span><span>[59.88, 30.42]</span></li>
+        </ul>
       </div>
-    </main>
-  </body>
+      <div class="city-card">
+        <div class="city-card-header">
+          <h3 class="city-font-color">Moscow</h3>
+          <p class="tempareture-font-color">5&degC</p>
+          <img src="images/Sun.png" style="max-height: 60px; max-width: 60px; height: auto; width: auto;">
+          <button type="button" class="remove-button">x</button>
+        </div>
+        <ul class="weather-values">
+          <li><span>Ветер</span><span>Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span>Облачность</span><span>Broken clouds</span></li>
+          <li><span>Давление</span><span> 1013 hpa</span></li>
+          <li><span>Влажность</span><span>52%</span></li>
+          <li><span>Координаты</span><span>[59.88, 30.42]</span></li>
+        </ul>
+      </div>
+      <div class="city-card">
+        <div class="city-card-header">
+          <h3 class="city-font-color">Helsinki</h3>
+          <p class="tempareture-font-color">3&degC</p>
+          <img src="images/Sun.png" style="max-height: 60px; max-width: 60px; height: auto; width: auto;">
+          <button type="button" class="remove-button">x</button>
+        </div>
+        <ul class="weather-values">
+          <li><span>Ветер</span><span>Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span>Облачность</span><span>Broken clouds</span></li>
+          <li><span>Давление</span><span> 1013 hpa</span></li>
+          <li><span>Влажность</span><span>52%</span></li>
+          <li><span>Координаты</span><span>[59.88, 30.42]</span></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</body>
 </html>
