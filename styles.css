@@ -1,17 +1,19 @@
 header {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
 
 body {
-    margin: 35px 35px 35px 35px;
+    margin: 35px 55px 35px 55px;
 }
 
 main {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 h1 {
@@ -26,7 +28,8 @@ h2 {
     margin-top: 25px;
     display: flex;
     flex-direction: row;
-    align-self: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .current-city-info {
@@ -43,21 +46,22 @@ h2 {
 }
 
 .current-city-weather > p {
-    font-size: 500%;
+    font-size: 300%;
 }
 
 .favorites-header {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 40px;
 }
 
-.weather-values {
-    max-width: 650px;
+.weather-property {
+    width: 600px;
 }
 
-.weather-values > li {
+.weather-property > li {
     background-color: rgb(167, 175, 176);
     margin-top: 10px;
     color: rgb(238, 246, 249);
@@ -65,16 +69,24 @@ h2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: large;
+    align-items: center;
+}
+
+.weather-property > li > .property-key {
     font-weight: bold;
-    min-width: 500px;
+    font-size: x-large;
+}
+
+.weather-property > li > .property-value {
+    font-size: large;
 }
 
 .city-cards-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
 }
 
 .city-card {
@@ -82,6 +94,7 @@ h2 {
     flex-direction: column;
     max-width: 700px;
     margin: 50px 0px 0px 0px;
+    width: auto;
 }
 
 .city-card-header {
@@ -96,11 +109,12 @@ h2 {
 textarea {
     resize: none;
     background-color: rgb(241, 241, 241);
-    max-height: 20px;
-    min-width: 300px;
+    max-height: 40px;
+    min-width: 400px;
     border: none;
     border-radius: 1px;
     padding: 8px;
+    
 }
 
 .tempareture-font-color {
@@ -144,8 +158,8 @@ button:hover {
 
 .geo-button {
     background-color: rgb(201, 210, 215);
-    min-width: 250px;
-    min-height: 50px;
+    min-width: 175px;
+    min-height: 35px;
     border-radius: 8px;
     font-size: medium;
     border: none;
@@ -155,4 +169,23 @@ button:hover {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+}
+
+@media all and (min-width: 700px) {
+    .current-city-weather > p {
+        font-size: 500%;
+    }
+
+    .geo-button {
+        min-width: 250px;
+        min-height: 50px;
+    }
+}
+
+@media all and (min-width: 1325px)
+{
+    .city-cards-container {
+        justify-content: space-between;
+    }
 }
