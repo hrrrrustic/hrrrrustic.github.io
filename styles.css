@@ -1,29 +1,3 @@
-header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-body {
-    margin: 35px 55px 35px 55px;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-h1 {
-    font-size: 250%;
-}
-
-h2 {
-    font-size: 180%;
-}
-
 .current-city-card {
     margin-top: 25px;
     display: flex;
@@ -106,17 +80,6 @@ h2 {
     font-weight: bold;
 }
 
-textarea {
-    resize: none;
-    background-color: rgb(241, 241, 241);
-    max-height: 40px;
-    min-width: 400px;
-    border: none;
-    border-radius: 1px;
-    padding: 8px;
-    
-}
-
 .tempareture-font-color {
     color: rgb(125, 125, 125);
     font-size: xx-large;
@@ -150,10 +113,6 @@ textarea {
     min-width: 40px;
     min-height: 40px;
     margin-left: 20px;
-}
-
-button:hover {
-    cursor: pointer;
 }
 
 .geo-button {

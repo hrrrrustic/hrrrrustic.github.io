@@ -1,0 +1,40 @@
+header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body {
+    margin: 35px 55px 35px 55px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h1 {
+    font-size: 250%;
+}
+
+h2 {
+    font-size: 180%;
+}
+
+textarea {
+    resize: none;
+    background-color: rgb(241, 241, 241);
+    max-height: 40px;
+    min-width: 400px;
+    border: none;
+    border-radius: 1px;
+    padding: 8px;
+    
+}
+
+button:hover {
+    cursor: pointer;
+}
