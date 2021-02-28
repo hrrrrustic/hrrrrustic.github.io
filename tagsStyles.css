@@ -2,12 +2,12 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 body {
-    margin: 35px 55px 35px 55px;
+    margin: 35px 25px 35px 25px;
 }
 
 main {
@@ -21,18 +21,7 @@ h1 {
 }
 
 h2 {
-    font-size: 180%;
-}
-
-textarea {
-    resize: none;
-    background-color: rgb(241, 241, 241);
-    max-height: 40px;
-    min-width: 400px;
-    border: none;
-    border-radius: 1px;
-    padding: 8px;
-    
+    font-size: 150%;
 }
 
 button:hover {

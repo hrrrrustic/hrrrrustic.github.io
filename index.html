@@ -12,19 +12,20 @@
 <body>
   <header>
     <h1>Погода здесь</h1>
-    <button type="submit" class="geo-button">Обновить геолокацию</button>
+    <button type="submit" class="geo-button"><span class="mobile">&#8634</span><span class="desktop">Обновить геолокацию</span></button>
   </header>
   <main>
     <div class="current-city-card">
       <div class="current-city-info">
         <h2 class="city-font-color">Saint-Petersburg</h2>
         <div class="current-city-weather">
-          <img src="images/Sun.png" style="max-height: 200px; max-width: 200px;">
+          <img src="images/Sun.png" style="max-height: 100px; max-width: 100px;">
           <p class="tempareture-font-color">8&degC</p>
         </div>
       </div>
-      <ul class="weather-property">
-        <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+      <ul class="weather-property current-weather-property">
+        <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s,
+            North-northwest</span></li>
         <li><span class="property-key">Облачность</span><span class="property-value">Broken clouds</span></li>
         <li><span class="property-key">Давление</span><span class="property-value"> 1013 hpa</span></li>
         <li><span class="property-key">Влажность</span><span class="property-value">52%</span></li>
@@ -33,13 +34,13 @@
     </div>
     <div class="favorites-header">
       <h2>Избранное</h2>
-      <div class="new-city-add-area">
-        <textarea placeholder="Добавить новый город"></textarea>
+      <form class="new-city-add-area">
+        <input type="text" placeholder="Добавить новый город" class="new-city-input">
         <button type="button" class="add-button">+</button>
-      </div>
+      </form>
     </div>
-    <div class="city-cards-container">
-      <div class="city-card">
+    <ol class="city-cards-container">
+      <li class="city-card">
         <div class="city-card-header">
           <h3 class="city-font-color">Moscow</h3>
           <p class="tempareture-font-color">5&degC</p>
@@ -47,14 +48,15 @@
           <button type="button" class="remove-button">x</button>
         </div>
         <ul class="weather-property">
-          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s,
+              North-northwest</span></li>
           <li><span class="property-key">Облачность</span><span class="property-value">Broken clouds</span></li>
           <li><span class="property-key">Давление</span><span class="property-value"> 1013 hpa</span></li>
           <li><span class="property-key">Влажность</span><span class="property-value">52%</span></li>
           <li><span class="property-key">Координаты</span><span class="property-value">[59.88, 30.42]</span></li>
         </ul>
-      </div>
-      <div class="city-card">
+      </li>
+      <li class="city-card">
         <div class="city-card-header">
           <h3 class="city-font-color">Helsinki</h3>
           <p class="tempareture-font-color">3&degC</p>
@@ -62,14 +64,15 @@
           <button type="button" class="remove-button">x</button>
         </div>
         <ul class="weather-property">
-          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s,
+              North-northwest</span></li>
           <li><span class="property-key">Облачность</span><span class="property-value">Broken clouds</span></li>
           <li><span class="property-key">Давление</span><span class="property-value"> 1013 hpa</span></li>
           <li><span class="property-key">Влажность</span><span class="property-value">52%</span></li>
           <li><span class="property-key">Координаты</span><span class="property-value">[59.88, 30.42]</span></li>
         </ul>
-      </div>
-      <div class="city-card">
+      </li>
+      <li class="city-card">
         <div class="city-card-header">
           <h3 class="city-font-color">Moscow</h3>
           <p class="tempareture-font-color">5&degC</p>
@@ -77,14 +80,15 @@
           <button type="button" class="remove-button">x</button>
         </div>
         <ul class="weather-property">
-          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s,
+              North-northwest</span></li>
           <li><span class="property-key">Облачность</span><span class="property-value">Broken clouds</span></li>
           <li><span class="property-key">Давление</span><span class="property-value"> 1013 hpa</span></li>
           <li><span class="property-key">Влажность</span><span class="property-value">52%</span></li>
           <li><span class="property-key">Координаты</span><span class="property-value">[59.88, 30.42]</span></li>
         </ul>
-      </div>
-      <div class="city-card">
+      </li>
+      <li class="city-card">
         <div class="city-card-header">
           <h3 class="city-font-color">Helsinki</h3>
           <p class="tempareture-font-color">3&degC</p>
@@ -92,14 +96,16 @@
           <button type="button" class="remove-button">x</button>
         </div>
         <ul class="weather-property">
-          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s, North-northwest</span></li>
+          <li><span class="property-key">Ветер</span><span class="property-value">Moderate breeeze, 6.0 m/s,
+              North-northwest</span></li>
           <li><span class="property-key">Облачность</span><span class="property-value">Broken clouds</span></li>
           <li><span class="property-key">Давление</span><span class="property-value"> 1013 hpa</span></li>
           <li><span class="property-key">Влажность</span><span class="property-value">52%</span></li>
           <li><span class="property-key">Координаты</span><span class="property-value">[59.88, 30.42]</span></li>
         </ul>
-      </div>
-    </div>
+      </li>
+    </ol>
   </main>
 </body>
+
 </html>
