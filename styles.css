@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: column;
     font-size: x-large;
+    justify-content: center;
 }
 
 .current-city-weather {
@@ -23,6 +24,11 @@
     font-size: 300%;
 }
 
+.current-city-weather > img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
 .current-weather-property {
     min-width: 40%;
 }
@@ -30,7 +36,6 @@
 .favorites-header {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 40px;
 }
@@ -67,7 +72,7 @@
 .city-card {
     display: flex;
     flex-direction: column;
-    min-width: 40%;
+    min-width: 45%;
     margin: 50px 0px 0px 0px;
 }
 
@@ -135,14 +140,14 @@
 .new-city-add-area {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    width: 60%;
+    justify-content: flex-end;
+    min-width: 60%;
 }
 
 .new-city-input {
     background-color: rgb(241, 241, 241);
     max-height: 50px;
-    min-width: 150px;
+    min-width: 70%;
     border: none;
     border-radius: 3px;
     padding: 8px;
@@ -165,7 +170,7 @@
 @media all and (min-width: 500px)
 {
     body {
-        margin: 35px 55px 35px 55px !important;
+        margin: 35px 55px 35px 55px
     }
 
     .city-card-header {
@@ -185,21 +190,73 @@
     }
 
     h2 {
-        font-size: 180% !important;
-    }
-
-    header {
-        justify-content: space-between !important;
+        font-size: 180%;
     }
 
     .current-city-weather > img {
-        min-width: 250px;
-        min-height: 250px;
+        max-width: 250px;
+        max-height: 250px;
+    }
+
+    .current-city-weather > p {
+        font-size: 330%;
     }
 }
 
-@media all and (min-width: 700px) {
-    .current-city-weather > p {
-        font-size: 500%;
+@media all and (max-width: 600px)
+{
+    .new-city-add-area {
+        margin-top: 10px;
+        min-width: 100%;
+    }
+
+    .new-city-input {
+        width: 100%;
+    }
+
+    .geo-button {
+        margin-top: 10px;
+    }
+
+    .favorites-header {
+        flex-wrap: wrap;
+        justify-content: center !important;
+    }
+
+    header {
+        justify-content: center;
+    }
+}
+
+@media all and (max-width: 935px)
+{
+    .current-city-card {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .favorites-header {
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .city-cards-container {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .city-card {
+        width: 100%;
+    }
+
+    .current-weather-property {
+        width: 100%;
+    }
+
+    .current-city-info {
+        align-items: center;
     }
 }
