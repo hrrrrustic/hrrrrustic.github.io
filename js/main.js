@@ -38,11 +38,17 @@ function LoadLocalStorage()
 
 function RemoveCard(item)
 {
+    let cityName;
     var card = item.currentTarget
     while(card.className != "city-card"){
+        if(card.className == "city-card-header")
+        {
+            cityName = card.querySelector("h3").innerText
+        }
         card = card.parentNode
     }
     cardContainer.removeChild(card)
+    RemoveFromLocalStorage(cityName)
 }
 
 async function FetchCityByName(cityName)
@@ -51,6 +57,8 @@ async function FetchCityByName(cityName)
     var card = await fetch(apiUrl)
         .then(x => x.json())
         .then(x => GetCityCardFromJson(x))
+
+    card.querySelector(".remove-button").addEventListener("click", RemoveCard)
 
     cardContainer.appendChild(card)
     return card
@@ -67,6 +75,15 @@ function AddCardToLocalStorage(cityName)
     else{
         localStorage.setItem(config.LocalStorageItemName, JSON.stringify(Array.of(cityName)))
     }
+}
+
+function RemoveFromLocalStorage(cityName)
+{
+    let savedCities = localStorage.getItem(config.LocalStorageItemName)
+    savedCities = JSON.parse(savedCities);
+    let itemIndex = savedCities.indexOf(cityName)
+    savedCities.splice(itemIndex, 1)
+    localStorage.setItem(config.LocalStorageItemName, JSON.stringify(savedCities))
 }
 
 function GetCityCardFromJson(jsonValue)
