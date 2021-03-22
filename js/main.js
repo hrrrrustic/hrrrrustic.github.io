@@ -3,15 +3,27 @@ let cardContainer;
 
 window.onload = function()
 {
-    document.querySelector(".geo-button").addEventListener("click", () => alert("clicked"));
-    document.querySelector(".add-button").addEventListener("click", () => FetchCity(document.querySelector(".new-city-input").value, AddCard))
+    document.querySelector(".geo-button").addEventListener("click", RefreshGeo);
+    document.querySelector(".add-button").addEventListener("click", 
+    () => {
+        let cityName = document.querySelector(".new-city-input").value
+        FetchCityByName(cityName)
+        AddCardToLocalStorage(cityName)
+    })
 
-    var removeButtons = document.querySelectorAll(".remove-button");
+    document.querySelector(".new-city-add-area").addEventListener("submit", function(event) {
+        event.preventDefault()
+        document.querySelector(".add-button").click()
+        document.querySelector(".new-city-input").value = ""
+    })
+
+    let removeButtons = document.querySelectorAll(".remove-button");
     removeButtons.forEach(function(elem){
         elem.addEventListener("click", RemoveCard)
     })
 
     cardContainer = document.querySelector(".city-cards-container")
+    RefreshGeo()
     LoadLocalStorage()
 }
 
@@ -20,7 +32,7 @@ function LoadLocalStorage()
     let savedCities = localStorage.getItem(config.LocalStorageItemName)
     if(savedCities)
     {
-        JSON.parse(savedCities).forEach((item) => cardContainer.appendChild(FetchCity(item, GetCityCardFromJson)))
+        JSON.parse(savedCities).forEach((item) => FetchCityByName(item))
     }
 }
 
@@ -33,26 +45,27 @@ function RemoveCard(item)
     cardContainer.removeChild(card)
 }
 
-async function FetchCity(cityName)
+async function FetchCityByName(cityName)
 {
-    let apiUrl = config.BaseApiUrl + "?q=" + cityName + "&appid=" + config.ApiKey
-    await fetch(apiUrl)
+    let apiUrl = config.BaseApiUrl + "?q=" + cityName + "&appid=" + config.ApiKey + "&lang=ru"
+    var card = await fetch(apiUrl)
         .then(x => x.json())
-        .then(x => AddCard(x));
+        .then(x => GetCityCardFromJson(x))
+
+    cardContainer.appendChild(card)
+    return card
 }
 
-function AddCard(jsonItem)
+function AddCardToLocalStorage(cityName)
 {
-    let newCard = GetCityCardFromJson(jsonItem)
-    cardContainer.appendChild(newCard)
     let savedCities = localStorage.getItem(config.LocalStorageItemName)
     if(savedCities){
         savedCities = JSON.parse(savedCities);
-        savedCities.push(jsonItem.name)
+        savedCities.push(cityName)
         localStorage.setItem(config.LocalStorageItemName, JSON.stringify(savedCities))
     }
     else{
-        localStorage.setItem(config.LocalStorageItemName, JSON.stringify(Array.of(jsonItem.name)))
+        localStorage.setItem(config.LocalStorageItemName, JSON.stringify(Array.of(cityName)))
     }
 }
 
@@ -75,11 +88,49 @@ function GetCityCardFromJson(jsonValue)
         </ul>`;
     
     newCard.querySelector("h3").textContent = jsonValue.name
-    newCard.querySelector(".tempareture-font-color").textContent = jsonValue.main.temp + " ℃"
+    newCard.querySelector(".tempareture-font-color").textContent = GetTemp(jsonValue)
     let properties = newCard.querySelectorAll(".weather-property li");
+    SetValues(properties, jsonValue)
+    return newCard
+}
+
+function RefreshGeo()
+{
+    navigator.geolocation.getCurrentPosition(
+        function(geolocation){
+            let lat = geolocation.coords.latitude
+            let lon = geolocation.coords.longitude
+            let url = config.BaseApiUrl + "?lat=" + lat + "&lon=" + lon + "&appId=" + config.ApiKey + "&lang=ru"
+            RefreshMainCity(url)
+        },
+        function(geolocation){
+            let url = config.BaseApiUrl + "?q=Moscow&appId=" + config.ApiKey + "&lang=ru"
+            RefreshMainCity(url)
+        }
+    )
+}
+
+async function RefreshMainCity(fetchurl)
+{
+    await fetch(fetchurl)
+        .then(x => x.json())
+        .then(x => {
+            let properties = document.querySelectorAll(".current-weather-property li")
+            SetValues(properties, x)
+            document.querySelector(".city-font-color").textContent = x.name
+            document.querySelector(".tempareture-font-color").textContent = GetTemp(x)
+        })
+}
+
+function SetValues(properties, jsonValue)
+{
     properties[0].querySelector(".property-value").textContent = jsonValue.wind.speed + " m/s"
     properties[1].querySelector(".property-value").textContent = jsonValue.main.pressure + " hpa"
     properties[2].querySelector(".property-value").textContent = jsonValue.main.humidity + "%"
     properties[3].querySelector(".property-value").textContent = "[" + jsonValue.coord.lon + ", " + jsonValue.coord.lat + "]"
-    return newCard
+}
+
+function GetTemp(json)
+{
+    return Math.round(json.main.temp) - 273 + " ℃"
 }
