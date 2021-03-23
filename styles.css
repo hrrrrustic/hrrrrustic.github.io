@@ -153,6 +153,9 @@
     padding: 8px;
 }
 
+.loader {
+    width: 100%;
+}
 @media all and (min-width: 321px) {
     .geo-button {
         min-width: 250px;

@@ -53,14 +53,19 @@ function RemoveCard(item)
 
 async function FetchCityByName(cityName)
 {
+    let loader = GetLoader(cityName)
+    loader.querySelector('h3').textContent = cityName
+    cardContainer.appendChild(loader)
     let apiUrl = config.BaseApiUrl + "?q=" + cityName + "&appid=" + config.ApiKey + "&lang=ru"
     var card = await fetch(apiUrl)
         .then(x => x.json())
-        .then(x => GetCityCardFromJson(x))
+        .then(x =>  GetCityCardFromJson(x))
+        .catch(x => GetErrorCard(cityName))
 
     card.querySelector(".remove-button").addEventListener("click", RemoveCard)
 
-    cardContainer.appendChild(card)
+    await new Promise(r => setTimeout(r, 2000));
+    loader.replaceWith(card)
     return card
 }
 
@@ -107,7 +112,7 @@ function GetCityCardFromJson(jsonValue)
     newCard.querySelector("h3").textContent = jsonValue.name
     newCard.querySelector(".tempareture-font-color").textContent = GetTemp(jsonValue)
     let properties = newCard.querySelectorAll(".weather-property li");
-    SetValues(properties, jsonValue)
+    SetValues(properties, newCard.querySelector(".city-card-header img"), jsonValue)
     return newCard
 }
 
@@ -132,22 +137,79 @@ async function RefreshMainCity(fetchurl)
     await fetch(fetchurl)
         .then(x => x.json())
         .then(x => {
-            let properties = document.querySelectorAll(".current-weather-property li")
-            SetValues(properties, x)
-            document.querySelector(".city-font-color").textContent = x.name
-            document.querySelector(".tempareture-font-color").textContent = GetTemp(x)
+            document.querySelector(".loader").replaceWith(GetMainCity(x))
         })
+        .catch(x => document.querySelector(".loader").replaceWith(GetErrorCard("!")))
 }
 
-function SetValues(properties, jsonValue)
+function SetValues(properties, icon, jsonValue)
 {
     properties[0].querySelector(".property-value").textContent = jsonValue.wind.speed + " m/s"
     properties[1].querySelector(".property-value").textContent = jsonValue.main.pressure + " hpa"
     properties[2].querySelector(".property-value").textContent = jsonValue.main.humidity + "%"
     properties[3].querySelector(".property-value").textContent = "[" + jsonValue.coord.lon + ", " + jsonValue.coord.lat + "]"
+    icon.src = config.BaseImageUrl + jsonValue.weather[0].icon + ".png"
 }
 
 function GetTemp(json)
 {
     return Math.round(json.main.temp) - 273 + " ℃"
+}
+
+function GetLoader(cityName)
+{
+    let loader = document.createElement("li")
+    loader.innerHTML =
+    `
+    <li>
+        <div class="city-card-header">
+          <h3 class="city-font-color"></h3>
+          <button type="button" class="remove-button">x</button>
+        </div>
+        <p style="font-size: xx-large;">Подождите, данные загружаются...</p>
+        </ul>
+      </li>`
+    loader.querySelector('h3').textContent = cityName
+    return loader
+}
+
+function GetErrorCard(cityName)
+{
+    let error = document.createElement("li")
+    error.innerHTML = 
+    `
+    <li>
+        <div class="city-card-header">
+          <h3 class="city-font-color">${cityName}</h3>
+          <button type="button" class="remove-button">x</button>
+        </div>
+        <p style="font-size: xx-large;">Произошла ошибка при получении данных. Проверьте правильность названия города и соединение с интернетом</p>
+        </ul>
+      </li>
+    `
+    return error
+}
+
+function GetMainCity(jsonValue)
+{
+    let mainInfo = document.createElement("div")
+    mainInfo.classList.add("current-city-card")
+    mainInfo.innerHTML = 
+    `
+    <div class="current-city-info">
+        <h2 class="city-font-color">${jsonValue.name}</h2>
+        <div class="current-city-weather">
+          <img src="">
+          <p class="tempareture-font-color">${GetTemp(jsonValue)}&degC</p>
+        </div>
+      </div>
+      <ul class="weather-property current-weather-property">
+        <li><span class="property-key">Ветер</span><span class="property-value"></span></li>
+        <li><span class="property-key">Давление</span><span class="property-value"></span></li>
+        <li><span class="property-key">Влажность</span><span class="property-value"></span></li>
+        <li><span class="property-key">Координаты</span><span class="property-value"></span></li>
+      </ul>
+    `
+    SetValues(mainInfo.querySelectorAll(".current-weather-property li"), mainInfo.querySelector(".current-city-weather img"), jsonValue)
+    return mainInfo
 }
