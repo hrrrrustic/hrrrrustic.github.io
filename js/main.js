@@ -40,7 +40,7 @@ function RemoveCard(item)
 {
     let cityName;
     var card = item.currentTarget
-    while(card.className != "city-card"){
+    while(!card.classList.contains("city-card")){
         if(card.className == "city-card-header")
         {
             cityName = card.querySelector("h3").innerText
@@ -159,16 +159,16 @@ function GetTemp(json)
 function GetLoader(cityName)
 {
     let loader = document.createElement("li")
+    loader.classList.add("city-card")
     loader.innerHTML =
     `
-    <li>
         <div class="city-card-header">
           <h3 class="city-font-color"></h3>
           <button type="button" class="remove-button">x</button>
         </div>
-        <p style="font-size: xx-large;">Подождите, данные загружаются...</p>
+        <p style="font-size: xx-large;">Данные загружаются...</p>
         </ul>
-      </li>`
+    `
     loader.querySelector('h3').textContent = cityName
     return loader
 }
@@ -176,16 +176,15 @@ function GetLoader(cityName)
 function GetErrorCard(cityName)
 {
     let error = document.createElement("li")
+    error.classList.add("city-card", "error")
     error.innerHTML = 
     `
-    <li>
         <div class="city-card-header">
           <h3 class="city-font-color">${cityName}</h3>
           <button type="button" class="remove-button">x</button>
         </div>
-        <p style="font-size: xx-large;">Произошла ошибка при получении данных. Проверьте правильность названия города и соединение с интернетом</p>
+        <p style="font-size: xx-large;">Произошла ошибка</p>
         </ul>
-      </li>
     `
     return error
 }
@@ -200,7 +199,7 @@ function GetMainCity(jsonValue)
         <h2 class="city-font-color">${jsonValue.name}</h2>
         <div class="current-city-weather">
           <img src="">
-          <p class="tempareture-font-color">${GetTemp(jsonValue)}&degC</p>
+          <p class="tempareture-font-color">${GetTemp(jsonValue)}</p>
         </div>
       </div>
       <ul class="weather-property current-weather-property">

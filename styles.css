@@ -156,6 +156,11 @@
 .loader {
     width: 100%;
 }
+
+.error {
+    align-self: baseline;
+}
+
 @media all and (min-width: 321px) {
     .geo-button {
         min-width: 250px;
