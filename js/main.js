@@ -4,9 +4,10 @@ let cardContainer;
 window.onload = function()
 {
     document.querySelector(".geo-button").addEventListener("click", RefreshGeo);
-    document.querySelector(".add-button").addEventListener("click", 
-    () => {
-        let cityName = document.querySelector(".new-city-input").value
+    document.querySelector(".add-button").addEventListener("click", () => {
+        let inputebox = document.querySelector(".new-city-input")
+        let cityName = inputebox.value
+        inputebox.value = ""
         FetchCityByName(cityName)
         AddCardToLocalStorage(cityName)
     })
@@ -30,8 +31,7 @@ window.onload = function()
 function LoadLocalStorage()
 {
     let savedCities = localStorage.getItem(config.LocalStorageItemName)
-    if(savedCities)
-    {
+    if(savedCities){
         JSON.parse(savedCities).forEach((item) => FetchCityByName(item))
     }
 }
@@ -41,8 +41,7 @@ function RemoveCard(item)
     let cityName;
     var card = item.currentTarget
     while(!card.classList.contains("city-card")){
-        if(card.className == "city-card-header")
-        {
+        if(card.className == "city-card-header"){
             cityName = card.querySelector("h3").innerText
         }
         card = card.parentNode
@@ -137,9 +136,24 @@ async function RefreshMainCity(fetchurl)
     await fetch(fetchurl)
         .then(x => x.json())
         .then(x => {
-            document.querySelector(".loader").replaceWith(GetMainCity(x))
+            let loader = document.querySelector(".loader")
+            if(loader){
+                loader.replaceWith(GetMainCity(x))
+            }
+            else{
+                document.querySelector(".current-city-card").replaceWith(GetMainCity(x))
+            }
         })
-        .catch(x => document.querySelector(".loader").replaceWith(GetErrorCard("!")))
+        .catch(x =>{
+            let error = GetMainCardError()
+            let loader = document.querySelector(".loader")
+            if(loader){
+                loader.replaceWith(error)
+            }
+            else{
+                document.querySelector(".current-city-card").replaceWith(error)
+            }
+        })
 }
 
 function SetValues(properties, icon, jsonValue)
@@ -187,6 +201,15 @@ function GetErrorCard(cityName)
         </ul>
     `
     return error
+}
+
+
+function GetMainCardError()
+{
+    let mainError = document.createElement("div")
+    mainError.classList.add("current-city-card")
+    mainError.innerHTML = `<p style="font-size:xx-large;">Произошла ошибка</p>`
+    return mainError
 }
 
 function GetMainCity(jsonValue)
