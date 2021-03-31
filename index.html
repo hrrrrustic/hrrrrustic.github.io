@@ -23,13 +23,58 @@
     <div class="favorites-header">
       <h2>Избранное</h2>
       <form class="new-city-add-area">
-        <input type="text" placeholder="Добавить новый город" class="new-city-input">
+        <input type="text" placeholder="Добавить новый город" class="new-city-input" required="true">
         <button type="button" class="add-button">+</button>
       </form>
     </div>
     <ol class="city-cards-container">
     </ol>
   </main>
+
+  <template id="helper-template">
+    <li class="city-card error">
+      <div class="city-card-header">
+        <h3 class="city-font-color"></h3>
+        <button type="button" class="remove-button">x</button>
+      </div>
+      <p style="font-size: xx-large;"></p>
+    </li>
+  </template>
+
+  <template id="city-card-template">
+    <li class="city-card">
+      <div class="city-card-header">
+        <h3 class="city-font-color"></h3>
+        <p class="tempareture-font-color"></p>
+        <img src="images/Sun.png" style="max-height: 60px; max-width: 60px; height: auto; width: auto;">
+        <button type="button" class="remove-button">x</button>
+      </div>
+      <ul class="weather-property">
+        <li><span class="property-key">Ветер</span><span class="property-value"></span></li>
+        <li><span class="property-key">Давление</span><span class="property-value"></span></li>
+        <li><span class="property-key">Влажность</span><span class="property-value"></span></li>
+        <li><span class="property-key">Координаты</span><span class="property-value"></span></li>
+      </ul>
+    </li>
+  </template>
+
+  <template id="main-city-template">
+    <div class="current-city-card">
+      <div class="current-city-info">
+        <h2 class="city-font-color"></h2>
+        <div class="current-city-weather">
+          <img src="">
+          <p class="tempareture-font-color"></p>
+        </div>
+      </div>
+      <ul class="weather-property current-weather-property">
+        <li><span class="property-key">Ветер</span><span class="property-value"></span></li>
+        <li><span class="property-key">Давление</span><span class="property-value"></span></li>
+        <li><span class="property-key">Влажность</span><span class="property-value"></span></li>
+        <li><span class="property-key">Координаты</span><span class="property-value"></span></li>
+      </ul>
+    </div>
+  </template>
 </body>
 
 </html>

@@ -1,15 +1,23 @@
 let config = new Configuration();
 let cardContainer;
+let helperTemplate;
+let cardTemplate;
+let mainCityTemplate;
 
-window.onload = function()
-{
+window.onload = function(){
     document.querySelector(".geo-button").addEventListener("click", RefreshGeo);
-    document.querySelector(".add-button").addEventListener("click", () => {
+    document.querySelector(".add-button").addEventListener("click", async () => {
         let inputebox = document.querySelector(".new-city-input")
         let cityName = inputebox.value
         inputebox.value = ""
-        FetchCityByName(cityName)
-        AddCardToLocalStorage(cityName)
+        try{
+            await FetchCityByName(cityName)
+            AddCardToLocalStorage(cityName)
+        }
+        catch{
+            alert("Такого города нет!")
+        }
+
     })
 
     document.querySelector(".new-city-add-area").addEventListener("submit", function(event) {
@@ -24,20 +32,21 @@ window.onload = function()
     })
 
     cardContainer = document.querySelector(".city-cards-container")
+    helperTemplate = document.querySelector("#helper-template")
+    cardTemplate = document.querySelector("#city-card-template")
+    mainCityTemplate = document.querySelector("#main-city-template")
     RefreshGeo()
     LoadLocalStorage()
 }
 
-function LoadLocalStorage()
-{
+function LoadLocalStorage(){
     let savedCities = localStorage.getItem(config.LocalStorageItemName)
     if(savedCities){
         JSON.parse(savedCities).forEach((item) => FetchCityByName(item))
     }
 }
 
-function RemoveCard(item)
-{
+function RemoveCard(item){
     let cityName;
     var card = item.currentTarget
     while(!card.classList.contains("city-card")){
@@ -50,26 +59,29 @@ function RemoveCard(item)
     RemoveFromLocalStorage(cityName)
 }
 
-async function FetchCityByName(cityName)
-{
+async function FetchCityByName(cityName){
     let loader = GetLoader(cityName)
     loader.querySelector('h3').textContent = cityName
     cardContainer.appendChild(loader)
     let apiUrl = config.BaseApiUrl + "?q=" + cityName + "&appid=" + config.ApiKey + "&lang=ru"
-    var card = await fetch(apiUrl)
-        .then(x => x.json())
-        .then(x =>  GetCityCardFromJson(x))
-        .catch(x => GetErrorCard(cityName))
+    let response = await fetch(apiUrl)
+    if(response.status === 404){
+        cardContainer.removeChild(loader)
+        throw new Error("Invalid city")
+    }
+    let card;
+    try{
+        card = GetCityCardFromJson(await response.json())
+    }
+    catch{
+        card = GetErrorCard(cityName)
+    }
 
     card.querySelector(".remove-button").addEventListener("click", RemoveCard)
-
-    await new Promise(r => setTimeout(r, 2000));
     loader.replaceWith(card)
-    return card
 }
 
-function AddCardToLocalStorage(cityName)
-{
+function AddCardToLocalStorage(cityName){
     let savedCities = localStorage.getItem(config.LocalStorageItemName)
     if(savedCities){
         savedCities = JSON.parse(savedCities);
@@ -81,8 +93,7 @@ function AddCardToLocalStorage(cityName)
     }
 }
 
-function RemoveFromLocalStorage(cityName)
-{
+function RemoveFromLocalStorage(cityName){
     let savedCities = localStorage.getItem(config.LocalStorageItemName)
     savedCities = JSON.parse(savedCities);
     let itemIndex = savedCities.indexOf(cityName)
@@ -90,24 +101,8 @@ function RemoveFromLocalStorage(cityName)
     localStorage.setItem(config.LocalStorageItemName, JSON.stringify(savedCities))
 }
 
-function GetCityCardFromJson(jsonValue)
-{
-    let newCard = document.createElement("li")
-    newCard.classList.add("city-card")
-    newCard.innerHTML = `
-        <div class="city-card-header">
-          <h3 class="city-font-color"></h3>
-          <p class="tempareture-font-color"></p>
-          <img src="images/Sun.png" style="max-height: 60px; max-width: 60px; height: auto; width: auto;">
-          <button type="button" class="remove-button">x</button>
-        </div>
-        <ul class="weather-property">
-          <li><span class="property-key">Ветер</span><span class="property-value"></span></li>
-          <li><span class="property-key">Давление</span><span class="property-value"></span></li>
-          <li><span class="property-key">Влажность</span><span class="property-value"></span></li>
-          <li><span class="property-key">Координаты</span><span class="property-value"></span></li>
-        </ul>`;
-    
+function GetCityCardFromJson(jsonValue){
+    let newCard = cardTemplate.content.cloneNode(true).querySelector(".city-card")
     newCard.querySelector("h3").textContent = jsonValue.name
     newCard.querySelector(".tempareture-font-color").textContent = GetTemp(jsonValue)
     let properties = newCard.querySelectorAll(".weather-property li");
@@ -115,8 +110,7 @@ function GetCityCardFromJson(jsonValue)
     return newCard
 }
 
-function RefreshGeo()
-{
+function RefreshGeo(){
     navigator.geolocation.getCurrentPosition(
         function(geolocation){
             let lat = geolocation.coords.latitude
@@ -131,8 +125,7 @@ function RefreshGeo()
     )
 }
 
-async function RefreshMainCity(fetchurl)
-{
+async function RefreshMainCity(fetchurl){
     await fetch(fetchurl)
         .then(x => x.json())
         .then(x => {
@@ -156,8 +149,7 @@ async function RefreshMainCity(fetchurl)
         })
 }
 
-function SetValues(properties, icon, jsonValue)
-{
+function SetValues(properties, icon, jsonValue){
     properties[0].querySelector(".property-value").textContent = jsonValue.wind.speed + " m/s"
     properties[1].querySelector(".property-value").textContent = jsonValue.main.pressure + " hpa"
     properties[2].querySelector(".property-value").textContent = jsonValue.main.humidity + "%"
@@ -165,73 +157,36 @@ function SetValues(properties, icon, jsonValue)
     icon.src = config.BaseImageUrl + jsonValue.weather[0].icon + ".png"
 }
 
-function GetTemp(json)
-{
+function GetTemp(json){
     return Math.round(json.main.temp) - 273 + " ℃"
 }
 
-function GetLoader(cityName)
-{
-    let loader = document.createElement("li")
-    loader.classList.add("city-card")
-    loader.innerHTML =
-    `
-        <div class="city-card-header">
-          <h3 class="city-font-color"></h3>
-          <button type="button" class="remove-button">x</button>
-        </div>
-        <p style="font-size: xx-large;">Данные загружаются...</p>
-        </ul>
-    `
-    loader.querySelector('h3').textContent = cityName
-    return loader
+function GetLoader(cityName){
+    return GetHelpCard(cityName, "Данные загружаются...")
 }
 
-function GetErrorCard(cityName)
-{
-    let error = document.createElement("li")
-    error.classList.add("city-card", "error")
-    error.innerHTML = 
-    `
-        <div class="city-card-header">
-          <h3 class="city-font-color">${cityName}</h3>
-          <button type="button" class="remove-button">x</button>
-        </div>
-        <p style="font-size: xx-large;">Произошла ошибка</p>
-        </ul>
-    `
+function GetErrorCard(cityName){
+    return GetHelpCard(cityName, "Произошла ошибка")
+}
+
+function GetHelpCard(cityName, text){
+    let help = helperTemplate.content.cloneNode(true).querySelector(".city-card")
+    help.querySelector('h3').textContent = cityName
+    help.querySelector("p").textContent = text
+    return help
+}
+
+function GetMainCardError(){
+    let error = GetErrorCard()
+    let button = error.querySelector("button")
+    button.parentNode.removeChild(button)
     return error
 }
 
-
-function GetMainCardError()
-{
-    let mainError = document.createElement("div")
-    mainError.classList.add("current-city-card")
-    mainError.innerHTML = `<p style="font-size:xx-large;">Произошла ошибка</p>`
-    return mainError
-}
-
-function GetMainCity(jsonValue)
-{
-    let mainInfo = document.createElement("div")
-    mainInfo.classList.add("current-city-card")
-    mainInfo.innerHTML = 
-    `
-    <div class="current-city-info">
-        <h2 class="city-font-color">${jsonValue.name}</h2>
-        <div class="current-city-weather">
-          <img src="">
-          <p class="tempareture-font-color">${GetTemp(jsonValue)}</p>
-        </div>
-      </div>
-      <ul class="weather-property current-weather-property">
-        <li><span class="property-key">Ветер</span><span class="property-value"></span></li>
-        <li><span class="property-key">Давление</span><span class="property-value"></span></li>
-        <li><span class="property-key">Влажность</span><span class="property-value"></span></li>
-        <li><span class="property-key">Координаты</span><span class="property-value"></span></li>
-      </ul>
-    `
+function GetMainCity(jsonValue){
+    let mainInfo = mainCityTemplate.content.cloneNode(true).querySelector(".current-city-card")
+    mainInfo.querySelector("h2").textContent = jsonValue.name
+    mainInfo.querySelector(".tempareture-font-color").textContent = GetTemp(jsonValue)
     SetValues(mainInfo.querySelectorAll(".current-weather-property li"), mainInfo.querySelector(".current-city-weather img"), jsonValue)
     return mainInfo
 }
