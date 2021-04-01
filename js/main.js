@@ -9,6 +9,9 @@ window.onload = function(){
     document.querySelector(".add-button").addEventListener("click", async () => {
         let inputebox = document.querySelector(".new-city-input")
         let cityName = inputebox.value
+        if(cityName == ""){
+            return
+        }
         inputebox.value = ""
         try{
             await FetchCityByName(cityName)
